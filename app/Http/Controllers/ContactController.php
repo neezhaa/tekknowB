@@ -3,23 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\Contact;
-use Illuminate\Http\Request;
+use App\Http\Requests\StoreContactRequest;
 
 class ContactController extends Controller
 {
-    public function store(Request $request)
+    public function store(StoreContactRequest $request)
     {
-        $validated = $request->validate([
-            'full_name' => 'required|string|max:255',
-            'email' => 'required|email',
-            'phone' => 'required|max:20',
-            'message' => 'required'
-        ]);
     
-        Contact::create($validated);
+        $contact = Contact::create($request->validated());
     
         return response()->json([
-            'message' => 'Merci ! Votre message a été envoyé avec succès.'
+            'success' => true,
+            'message' => 'Merci ! Votre message a été envoyé avec succès.',
+            'data' => $contact
         ],201);
     }
 }
