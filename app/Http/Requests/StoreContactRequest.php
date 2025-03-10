@@ -26,7 +26,7 @@ class StoreContactRequest extends FormRequest
         return [
             'full_name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
-            'phone' => 'required|string|max:15',
+            'phone' => 'required|string|max:20',
             'message' => 'required|string|min:10',
         ];
     }
@@ -35,11 +35,11 @@ class StoreContactRequest extends FormRequest
     public function messages()
     {
         return [
-            'full_name.required' => 'Le nom est obligatoire.',
-            'email.required' => 'L\'email est obligatoire.',
-            'email.email' => 'Veuillez entrer une adresse email valide.',
-            'message.required' => 'Le message est obligatoire.',
-            'message.min' => 'Le message doit contenir au moins 10 caractères.',
+            'full_name.required' => 'The name is required.',
+            'email.required' => 'The email is required.',
+            'email.email' => 'Please enter a valid email address.',
+            'message.required' => 'The message is required.',
+            'message.min' => 'The message must be at least 10 characters long.',
         ];
     }
 
