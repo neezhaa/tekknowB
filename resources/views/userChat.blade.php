@@ -1,3 +1,3 @@
 <x-app-layout>
-    @livewire('chat', ['userId' => $userId])
+    <livewire:chat :user-id="$userId" />
 </x-app-layout>
