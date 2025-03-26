@@ -8,7 +8,6 @@ use App\Models\Message;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\On;
 use Livewire\Component;
-use Illuminate\Support\Facades\Log;
 
 class Chat extends Component
 {
@@ -24,6 +23,8 @@ class Chat extends Component
         $this->senderId = Auth::user()->id;
         $this->recipientId = $userId;
         $this->messages = $this->loadMessages();
+
+        $this->dispatch('latestMessages');
     }
 
     public function render()
@@ -46,18 +47,17 @@ class Chat extends Component
 
         $this->message = null;
 
-        // $this->dispatch('update');
+        $this->dispatch('latestMessages');
     }
 
     #[On('echo-private:chat.{senderId},MessageSent')]
 
     public function listenMessage($event)
     {
-        // Log the event received
-        Log::info('MessageSent event received:', $event);
-
         $newMessage = Message::find($event['message']['id'])->load('user:id,name', 'recipient:id,name');
         $this->messages[] = $newMessage; 
+
+        $this->dispatch('latestMessages');
     }
 
     public function saveMessage()

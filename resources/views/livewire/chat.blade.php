@@ -1,9 +1,15 @@
-<div class="py-8">
+<div class="py-5">
     <div class="max-w-5xl mx-auto sm:px-6 lg:px-10">
+        <div class="flex mb-1">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+            </svg>              
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">{{ $user->name }}</h2>
+        </div>
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg h-[500px]">
             <div class="flex h-full">
                 <div class="flex-1 flex flex-col">
-                    <div class="flex-1 overflow-y-auto p-4 space-y-4">
+                    <div id="messages-container"  class="flex-1 overflow-y-auto p-4 space-y-4">
                         @foreach($messages as $message)
                             <div class="{{ $message->user_id === auth()->id() ? 'text-right' : 'text-left' }}">
                                 <div class="{{ $message->user_id === auth()->id() ? 'bg-blue-500 text-white' : 'bg-gray-200' }} inline-block p-3 rounded-lg max-w-[70%]">
@@ -30,3 +36,17 @@
         </div>
     </div>
 </div>
+
+<script type="module">
+    Livewire.on('latestMessages', () => {
+        setTimeout(scrollToBottom, 50);
+    });
+
+    function scrollToBottom() {
+        const container = document.getElementById('messages-container');
+        container.scrollTo({
+            top: container.scrollHeight,
+            behavior: 'smooth'
+        });
+    }
+</script>
